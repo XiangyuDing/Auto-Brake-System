@@ -26,7 +26,7 @@ def ABStest():
 def randomSafetyTest(times):
     # Randomly produce initial variables: distance and velocity
     for test in range(times):
-        init_s = float(random.randint(30,50))
+        init_s = float(random.randint(20,50))
         init_v = float(random.randint(1,30))
         init_b = 0
 
@@ -34,20 +34,20 @@ def randomSafetyTest(times):
     
 def feedback(distance, speed):
     # Entire processing simulation
-    # weight = 1
-    t = 0.5
+    t = 0.1
     count = 0
     crash = 0
     list_d = [distance]
     list_v = [speed]
     list_b = []
     while speed > 0:
+        speed_0 = speed
         brake = FLctrl(distance, speed)
-        speed = speed - brake * t
+        speed = speed_0 - brake * t
         if speed < 0.0:
             speed = 0.0
         brake, speed = round(brake,2), round(speed,2)
-        distance = distance - (2 * speed + brake * t) / 2
+        distance = distance - ((speed_0 + speed) / 2)* t 
         distance = round(distance,2)
         list_d.append(distance)
         list_v.append(speed)
@@ -59,11 +59,11 @@ def feedback(distance, speed):
         print('speed is: {0:.2f}m/s, distance is: {1:.2f}m, brake force is: {2:.2f}kN'
               .format(speed, distance, brake))
         count += 1
-    T = t * count
+    T = round(t * count, 2)
     print('Total time is {0:.1f}s'.format(T))
 
     # Save data into samples.txt file
-    file = open('samples.txt','a')
+    file = open('samples3.txt','a')
     file.write(' '.join(str(d) for d in list_d) + '\t')
     file.write(' '.join(str(v) for v in list_v) + '\t')
     file.write(' '.join(str(b) for b in list_b) + '\t')
@@ -118,26 +118,6 @@ def FLctrl(current_distance, current_speed):
     ABS.compute()
     # brake.view(sim = ABS)
     return ABS.output['brake']
-
-
-def dataAnalysis(filename):
-    fr = open(filename)
-    arrayOfLines = fr.readlines()
-    n = len(arrayOfLines)
-    X = np.arange(n//10)
-    crash = []
-    for line in arrayOfLines:
-        line = line.strip()
-        listFromLine = line.split(' ')
-        crashes.append(int(listFromLine[-1]))
-    
-
-
-def linear_regression(filename):
-    pass
-
-def polycurvefit(filename):
-    pass
 
 
 if __name__ == "__main__":
