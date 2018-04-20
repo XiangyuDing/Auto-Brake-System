@@ -1,3 +1,15 @@
+'''
+ECE 2195: Biology and Computing
+Term Project: Fuzzy Logic Control for Autonomous Emergency Braking System
+Author: Xiangyu Ding
+Instructor: Natasa Miskov
+Date: Apr 19th, 2018
+
+Fuzzy logic and test functions
+Copyright reserved.
+'''
+
+
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
