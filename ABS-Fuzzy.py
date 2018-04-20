@@ -34,7 +34,7 @@ def randomSafetyTest(times):
     
 def feedback(distance, speed):
     # Entire processing simulation
-    t = 0.1
+    t = 1/8
     count = 0
     crash = 0
     list_d = [distance]
@@ -59,7 +59,7 @@ def feedback(distance, speed):
         print('speed is: {0:.2f}m/s, distance is: {1:.2f}m, brake force is: {2:.2f}kN'
               .format(speed, distance, brake))
         count += 1
-    T = round(t * count, 2)
+    T = t * count
     print('Total time is {0:.1f}s'.format(T))
 
     # Save data into samples.txt file
